@@ -688,6 +688,11 @@ footer {
     margin-bottom: 2rem;
 }
 
+.footer-col {
+    flex: 1 1 250px; /* Ensure columns stack and have min width */
+    margin-bottom: 1.5rem;
+}
+
 .footer-col h3 { color: white; margin-bottom: 1.5rem; }
 .footer-col ul li { margin-bottom: 0.8rem; color: #94a3b8; }
 .footer-col ul li:hover { color: var(--accent-color); cursor: pointer; }
@@ -745,6 +750,10 @@ footer {
     .nav-links.active { display: flex; animation: fadeIn 0.3s ease; }
     
     /* Typography & Hero */
+    .hero {
+        background-attachment: scroll; /* Fix iOS parallax issue */
+        min-height: 70vh; /* Adjusted for mobile */
+    }
     .hero h1 { font-size: 2rem; }
     .hero p { font-size: 1rem; }
     .section-title { font-size: 1.8rem; margin: 3rem 0 2rem; }
@@ -773,6 +782,16 @@ footer {
     .success-card { padding: 1.5rem; }
     .action-buttons { flex-direction: column; }
     .btn { width: 100%; }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        align-items: flex-start; /* Left align for mobile footer */
+    }
+    .footer-col {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
 }
 
 /* Print Styles for Invoice */
