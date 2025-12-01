@@ -105,3 +105,9 @@ function showToast() {
         }, 3000);
     }
 }
+
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+    const nav = document.getElementById('nav-links');
+    nav.classList.toggle('active');
+}
