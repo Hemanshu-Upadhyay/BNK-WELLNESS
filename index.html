@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNK Wellness | Premium Ayurvedic Care</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fonts: Playfair Display for Headings, Lato for Body -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo"><a href="index.html">BNK WELLNESS</a></div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#categories">Collections</a>
+                <a href="#products">Best Sellers</a>
+                <a href="#">Our Story</a>
+            </nav>
+            <div class="header-icons">
+                <div class="cart-icon" onclick="window.location.href='cart.html'">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Wellness, Redefined.</h1>
+            <p>Experience the synergy of ancient Ayurveda and modern science. Premium formulations for a balanced life.</p>
+            <a href="#products" class="btn btn-accent">Shop Best Sellers</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="container">
+        <h2 class="section-title">Curated Collections</h2>
+        <div class="categories-grid" id="categories-container">
+            <!-- Categories injected via JS -->
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="products" class="container">
+        <h2 class="section-title">Signature Products</h2>
+        <div class="products-grid" id="products-container">
+            <!-- Products injected via JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>BNK WELLNESS</h3>
+                    <p style="color: #94a3b8; max-width: 300px;">
+                        Elevating your daily ritual with science-backed Ayurvedic solutions. Pure, potent, and premium.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li>Sexual Wellness</li>
+                        <li>Hair Care</li>
+                        <li>Diabetic Care</li>
+                        <li>All Products</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li>Track Order</li>
+                        <li>Shipping Policy</li>
+                        <li>Returns</li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Stay Connected</h3>
+                    <div style="display: flex; gap: 15px; font-size: 1.2rem;">
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BNK Wellness. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>Added to Cart!</span>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

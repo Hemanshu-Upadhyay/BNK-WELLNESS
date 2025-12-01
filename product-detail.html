@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | BNK Wellness</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo"><a href="index.html">BNK WELLNESS</a></div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#categories">Collections</a>
+            </nav>
+            <div class="header-icons">
+                <div class="cart-icon" onclick="window.location.href='cart.html'">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> / <span id="crumb-category">Category</span> / <span id="crumb-name">Product</span>
+        </div>
+
+        <div id="product-detail-root" class="pdp-container">
+            <!-- Content injected via JS -->
+        </div>
+        
+        <!-- Tabs Section -->
+        <div id="product-tabs-root" class="pdp-tabs">
+            <!-- Tabs injected via JS -->
+        </div>
+    </main>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>Added to Cart!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>BNK WELLNESS</h3>
+                    <p style="color: #94a3b8; max-width: 300px;">
+                        Elevating your daily ritual with science-backed Ayurvedic solutions. Pure, potent, and premium.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li>Sexual Wellness</li>
+                        <li>Hair Care</li>
+                        <li>Diabetic Care</li>
+                        <li>All Products</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li>Track Order</li>
+                        <li>Shipping Policy</li>
+                        <li>Returns</li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Stay Connected</h3>
+                    <div style="display: flex; gap: 15px; font-size: 1.2rem;">
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BNK Wellness. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            
+            if(productId) {
+                loadProductDetails(productId);
+            } else {
+                document.getElementById('product-detail-root').innerHTML = '<p>Product not found.</p>';
+            }
+        });
+
+        function loadProductDetails(id) {
+            const product = products.find(p => p.id === id);
+            if(!product) return;
+
+            // Update Breadcrumbs
+            document.getElementById('crumb-category').innerText = categories.find(c => c.id === product.category)?.name || product.category;
+            document.getElementById('crumb-name').innerText = product.name;
+
+            // Render Main PDP Content
+            const container = document.getElementById('product-detail-root');
+            container.innerHTML = `
+                <div class="pdp-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="pdp-content">
+                    <span class="product-category-label" style="font-size: 1rem;">
+                        ${categories.find(c => c.id === product.category)?.name || product.category}
+                    </span>
+                    <h1>${product.name}</h1>
+                    
+                    <div class="pdp-price">
+                        ₹${product.price} <small>₹${product.originalPrice}</small>
+                    </div>
+                    
+                    <p class="pdp-desc">${product.description}</p>
+                    
+                    <div style="margin: 2rem 0; color: var(--text-main);">
+                        <p><i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i> In Stock & Ready to Ship</p>
+                        <p><i class="fas fa-shield-alt" style="color: var(--primary-dark); margin-right: 10px;"></i> 100% Authentic Ayurveda</p>
+                    </div>
+
+                    <div class="pdp-actions">
+                        <button class="btn btn-primary add-btn-lg" onclick="addToCart(${product.id})">
+                            ADD TO CART - ₹${product.price}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Render Tabs
+            const tabsContainer = document.getElementById('product-tabs-root');
+            const ingredientsList = product.ingredients ? product.ingredients.join(', ') : 'Herbal Blend';
+            
+            // Generate FAQs HTML
+            let faqsHtml = '<p>No FAQs available.</p>';
+            if(product.faqs && product.faqs.length > 0) {
+                faqsHtml = product.faqs.map(f => `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--primary-dark);">${f.q}</h4>
+                        <p style="color: var(--text-muted);">${f.a}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Dummy Reviews
+            const reviewsHtml = `
+                <div class="reviews-section">
+                    <div class="review-item" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem;">
+                            <div style="color: #F59E0B;">★★★★★</div>
+                            <span style="font-weight: 700;">Rahul S.</span>
+                            <span style="color: #999; font-size: 0.9rem;">- Verified Buyer</span>
+                        </div>
+                        <p>"Amazing product! I've been using it for 2 weeks and can already feel the difference. Highly recommended."</p>
+                    </div>
+                    <div class="review-item" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem;">
+                            <div style="color: #F59E0B;">★★★★★</div>
+                            <span style="font-weight: 700;">Priya M.</span>
+                            <span style="color: #999; font-size: 0.9rem;">- Verified Buyer</span>
+                        </div>
+                        <p>"Packaging was great and delivery was fast. The quality of the ingredients seems top notch."</p>
+                    </div>
+                    <div class="review-item">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem;">
+                            <div style="color: #F59E0B;">★★★★☆</div>
+                            <span style="font-weight: 700;">Amit K.</span>
+                            <span style="color: #999; font-size: 0.9rem;">- Verified Buyer</span>
+                        </div>
+                        <p>"Good results so far. Will buy again."</p>
+                    </div>
+                </div>
+            `;
+
+            tabsContainer.innerHTML = `
+                <div class="tab-header">
+                    <button class="tab-btn active" onclick="switchTab('details')">Product Details</button>
+                    <button class="tab-btn" onclick="switchTab('ingredients')">Ingredients</button>
+                    <button class="tab-btn" onclick="switchTab('faqs')">FAQs</button>
+                    <button class="tab-btn" onclick="switchTab('reviews')">Reviews (3)</button>
+                </div>
+                
+                <div id="tab-details" class="tab-content active">
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">
+                        ${product.details}
+                    </p>
+                </div>
+                
+                <div id="tab-ingredients" class="tab-content">
+                    <h3 style="font-size: 1.5rem;">Key Ingredients</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-muted);">
+                        ${ingredientsList}
+                    </p>
+                </div>
+                
+                <div id="tab-faqs" class="tab-content">
+                    ${faqsHtml}
+                </div>
+
+                <div id="tab-reviews" class="tab-content">
+                    ${reviewsHtml}
+                </div>
+            `;
+        }
+
+        function switchTab(tabName) {
+            // Reset tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Activate selected
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

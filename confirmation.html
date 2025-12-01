@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | BNK Wellness</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation (Simplified) -->
+    <header>
+        <div class="container header-container">
+            <div class="logo"><a href="index.html">BNK WELLNESS</a></div>
+        </div>
+    </header>
+
+    <main class="confirmation-container">
+        <div class="success-card">
+            <!-- Print Only Header -->
+            <div class="invoice-header" style="display: none; text-align: left; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
+                <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">BNK WELLNESS</h1>
+                <p style="color: #666; font-size: 0.9rem;">
+                    123 Wellness Street, Bangalore, KA 560102<br>
+                    support@bnkwellness.com | +91 98765 43210
+                </p>
+            </div>
+
+            <div class="success-icon no-print">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="no-print">Order Confirmed!</h1>
+            <h1 class="print-only" style="display: none;">TAX INVOICE</h1>
+            
+            <p class="order-subtitle no-print">Thank you for choosing BNK Wellness. Your journey to better health begins here.</p>
+            
+            <div class="order-details">
+                <div class="detail-row">
+                    <span>Order ID:</span>
+                    <span id="order-id">#BNK-0000</span>
+                </div>
+                <div class="detail-row">
+                    <span>Date:</span>
+                    <span id="order-date">Loading...</span>
+                </div>
+                <div class="detail-row">
+                    <span>Total Amount:</span>
+                    <span class="total-amount" id="order-total">₹0</span>
+                </div>
+            </div>
+
+            <!-- Order Items Section -->
+            <div style="text-align: left; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Items Ordered</h3>
+                <div id="order-items-list">
+                    <!-- Items injected via JS -->
+                </div>
+            </div>
+
+            <div class="shipping-info">
+                <h3>Shipping To:</h3>
+                <p id="customer-name">Customer Name</p>
+                <p id="customer-address">Address Line 1, City, Zip</p>
+            </div>
+
+            <div class="action-buttons no-print">
+                <a href="index.html" class="btn btn-primary">Continue Shopping</a>
+                <button onclick="window.print()" class="btn btn-outline">Download Invoice</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>BNK WELLNESS</h3>
+                    <p style="color: #94a3b8; max-width: 300px;">
+                        Elevating your daily ritual with science-backed Ayurvedic solutions. Pure, potent, and premium.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li>Sexual Wellness</li>
+                        <li>Hair Care</li>
+                        <li>Diabetic Care</li>
+                        <li>All Products</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li>Track Order</li>
+                        <li>Shipping Policy</li>
+                        <li>Returns</li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Stay Connected</h3>
+                    <div style="display: flex; gap: 15px; font-size: 1.2rem;">
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BNK Wellness. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve order data from localStorage
+            const lastOrder = JSON.parse(localStorage.getItem('bnk_last_order'));
+            
+            if (lastOrder) {
+                document.getElementById('order-id').innerText = lastOrder.orderId;
+                document.getElementById('order-date').innerText = lastOrder.date;
+                document.getElementById('order-total').innerText = '₹' + lastOrder.total;
+                document.getElementById('customer-name').innerText = lastOrder.customer.name;
+                document.getElementById('customer-address').innerText = `${lastOrder.customer.address}, ${lastOrder.customer.city} - ${lastOrder.customer.pincode}`;
+            
+                // Render Items
+                const itemsContainer = document.getElementById('order-items-list');
+                if (lastOrder.items && lastOrder.items.length > 0) {
+                    itemsContainer.innerHTML = lastOrder.items.map(item => {
+                        const product = products.find(p => p.id === item.productId);
+                        if (!product) return '';
+                        return `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.95rem;">
+                                <div>
+                                    <span style="font-weight: 600;">${product.name}</span> <span style="color: #666;">x ${item.qty}</span>
+                                </div>
+                                <div>₹${product.price * item.qty}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } else {
+                // If no order found, redirect to home
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>
