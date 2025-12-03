@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNK Wellness | Premium Ayurvedic Care</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Fonts: Playfair Display for Headings, Lato for Body -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <title>BNK Wellness | Ancient Wisdom, Modern Living</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <!-- Fonts: Playfair Display (Serif) & Lato (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -14,23 +16,27 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+
             <div class="logo"><a href="index.html">BNK WELLNESS</a></div>
             
             <nav class="nav-links" id="nav-links">
                 <a href="index.html">Home</a>
-                <a href="#categories">Collections</a>
+                <a href="#philosophy">Our Philosophy</a>
+                <a href="#categories">The Shop</a>
                 <a href="#products">Best Sellers</a>
-                <a href="#">Our Story</a>
             </nav>
             
             <div class="header-icons">
+                <div class="search-icon">
+                    <i class="fas fa-search" style="color: var(--primary-dark); cursor: pointer;"></i>
+                </div>
                 <div class="cart-icon" onclick="window.location.href='cart.html'">
                     <i class="fas fa-shopping-bag"></i>
                     <span class="cart-count" id="cart-count">0</span>
                 </div>
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
         </div>
     </header>
@@ -38,14 +44,47 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Wellness, Redefined.</h1>
-            <p>Experience the synergy of ancient Ayurveda and modern science. Premium formulations for a balanced life.</p>
-            <a href="#products" class="btn btn-accent">Shop Best Sellers</a>
+            <h1>Wellness, Elevated.</h1>
+            <p>Experience the harmony of ancient Ayurvedic wisdom and modern science. Pure, potent, and designed for your daily ritual.</p>
+            <a href="#products" class="btn btn-primary" style="background-color: white; color: var(--primary-dark);">Shop The Collection</a>
+        </div>
+    </section>
+
+    <!-- Philosophy Section (New) -->
+    <section id="philosophy" class="philosophy">
+        <div class="container">
+            <div class="philosophy-text">
+                <h2>The BNK Philosophy</h2>
+                <p>We believe true wellness is a balance of mind, body, and spirit. Our holistic approach addresses the root causes of imbalance to facilitate deep, lasting healing.</p>
+            </div>
+            
+            <div class="philosophy-grid">
+                <!-- Detoxify -->
+                <div class="philosophy-card">
+                    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1000&auto=format&fit=crop" alt="Detoxify" class="philosophy-img">
+                    <h3>Detoxify</h3>
+                    <p>Purify your body, restoring its natural balance through curated therapies for internal rejuvenation.</p>
+                </div>
+
+                <!-- Revitalize -->
+                <div class="philosophy-card">
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1000&auto=format&fit=crop" alt="Revitalize" class="philosophy-img">
+                    <h3>Revitalize</h3>
+                    <p>Replenish essential minerals and nutrients, customized to address your unique needs and boost vitality.</p>
+                </div>
+
+                <!-- Restore -->
+                <div class="philosophy-card">
+                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1000&auto=format&fit=crop" alt="Restore" class="philosophy-img">
+                    <h3>Restore</h3>
+                    <p>Harmonize your body's pH balance, creating an optimal environment for overall well-being and calm.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Categories Section -->
-    <section id="categories" class="container">
+    <section id="categories" class="container" style="margin-bottom: 6rem;">
         <h2 class="section-title">Curated Collections</h2>
         <div class="categories-grid" id="categories-container">
             <!-- Categories injected via JS -->
@@ -58,6 +97,10 @@
         <div class="products-grid" id="products-container">
             <!-- Products injected via JS -->
         </div>
+        
+        <div style="text-align: center; margin-bottom: 6rem;">
+            <a href="#" class="btn btn-outline">View All Products</a>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -65,18 +108,18 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
-                    <h3>BNK WELLNESS</h3>
-                    <p style="color: #94a3b8; max-width: 300px;">
+                    <h3 style="font-family: 'Playfair Display', serif; font-style: italic;">BNK WELLNESS</h3>
+                    <p style="color: #9ca3af; max-width: 300px; line-height: 1.8;">
                         Elevating your daily ritual with science-backed Ayurvedic solutions. Pure, potent, and premium.
                     </p>
                 </div>
                 <div class="footer-col">
                     <h3>Shop</h3>
                     <ul>
-                        <li>Sexual Wellness</li>
-                        <li>Hair Care</li>
-                        <li>Diabetic Care</li>
-                        <li>All Products</li>
+                        <li>Herbs</li>
+                        <li>Oils</li>
+                        <li>Butters</li>
+                        <li>Consultations</li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -89,11 +132,11 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Stay Connected</h3>
-                    <div style="display: flex; gap: 15px; font-size: 1.2rem;">
-                        <i class="fab fa-instagram"></i>
-                        <i class="fab fa-facebook"></i>
-                        <i class="fab fa-twitter"></i>
+                    <h3>Follow Us</h3>
+                    <div style="display: flex; gap: 20px; font-size: 1.2rem; margin-top: 10px;">
+                        <i class="fab fa-instagram" style="cursor: pointer;"></i>
+                        <i class="fab fa-facebook" style="cursor: pointer;"></i>
+                        <i class="fab fa-pinterest" style="cursor: pointer;"></i>
                     </div>
                 </div>
             </div>

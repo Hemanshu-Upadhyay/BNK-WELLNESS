@@ -20,10 +20,10 @@ function renderCategories() {
 
     container.innerHTML = categories.map(cat => `
         <div class="category-card" onclick="filterProducts('${cat.id}')">
-            <img src="${cat.image}" alt="${cat.name}">
-            <div class="category-overlay">
-                <h3>${cat.name}</h3>
+            <div class="category-img-wrapper">
+                <img src="${cat.image}" alt="${cat.name}">
             </div>
+            <h3>${cat.name}</h3>
         </div>
     `).join('');
 }

@@ -4,70 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Confirmed | BNK Wellness</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .success-card {
+            max-width: 700px;
+            margin: 4rem auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+        .confirmation-container {
+            min-height: 80vh;
+            background: var(--bg-body);
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Navigation (Simplified) -->
+    <!-- Header (Simplified) -->
     <header>
-        <div class="container header-container">
+        <div class="container header-container" style="justify-content: center;">
             <div class="logo"><a href="index.html">BNK WELLNESS</a></div>
         </div>
     </header>
 
     <main class="confirmation-container">
-        <div class="success-card">
-            <!-- Print Only Header -->
-            <div class="invoice-header" style="display: none; text-align: left; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
-                <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">BNK WELLNESS</h1>
-                <p style="color: #666; font-size: 0.9rem;">
-                    123 Wellness Street, Bangalore, KA 560102<br>
-                    support@bnkwellness.com | +91 98765 43210
+        <div class="container">
+            <div class="success-card">
+                <!-- Print Only Header -->
+                <div class="invoice-header" style="display: none; text-align: left; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
+                    <h1 style="font-size: 2rem; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">BNK WELLNESS</h1>
+                    <p style="color: #666; font-size: 0.9rem;">
+                        123 Wellness Street, Bangalore, KA 560102<br>
+                        support@bnkwellness.com | +91 98765 43210
+                    </p>
+                </div>
+
+                <div class="success-icon no-print" style="width: 80px; height: 80px; background: var(--success); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
+                    <i class="fas fa-check"></i>
+                </div>
+                
+                <h1 class="no-print" style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 400;">Order Confirmed!</h1>
+                <h1 class="print-only" style="display: none;">TAX INVOICE</h1>
+                
+                <p class="order-subtitle no-print" style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto 3rem;">
+                    Thank you for choosing BNK Wellness. Your journey to holistic health begins here.
                 </p>
-            </div>
-
-            <div class="success-icon no-print">
-                <i class="fas fa-check"></i>
-            </div>
-            <h1 class="no-print">Order Confirmed!</h1>
-            <h1 class="print-only" style="display: none;">TAX INVOICE</h1>
-            
-            <p class="order-subtitle no-print">Thank you for choosing BNK Wellness. Your journey to better health begins here.</p>
-            
-            <div class="order-details">
-                <div class="detail-row">
-                    <span>Order ID:</span>
-                    <span id="order-id">#BNK-0000</span>
+                
+                <div class="order-details" style="background: #fafafa; border-radius: 8px; padding: 2rem; text-align: left; margin-bottom: 2rem; border: 1px solid #f3f4f6;">
+                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                        <span style="color: var(--text-muted);">Order ID:</span>
+                        <span id="order-id" style="font-weight: 600; color: var(--primary-dark);">#BNK-0000</span>
+                    </div>
+                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                        <span style="color: var(--text-muted);">Date:</span>
+                        <span id="order-date">Loading...</span>
+                    </div>
+                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                        <span style="color: var(--text-muted);">Total Amount:</span>
+                        <span class="total-amount" id="order-total" style="font-weight: 700; font-size: 1.2rem; color: var(--primary-dark);">₹0</span>
+                    </div>
                 </div>
-                <div class="detail-row">
-                    <span>Date:</span>
-                    <span id="order-date">Loading...</span>
-                </div>
-                <div class="detail-row">
-                    <span>Total Amount:</span>
-                    <span class="total-amount" id="order-total">₹0</span>
-                </div>
-            </div>
 
-            <!-- Order Items Section -->
-            <div style="text-align: left; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Items Ordered</h3>
-                <div id="order-items-list">
-                    <!-- Items injected via JS -->
+                <!-- Order Items Section -->
+                <div style="text-align: left; margin-bottom: 2rem; padding: 0 1rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Items Ordered</h3>
+                    <div id="order-items-list">
+                        <!-- Items injected via JS -->
+                    </div>
                 </div>
-            </div>
 
-            <div class="shipping-info">
-                <h3>Shipping To:</h3>
-                <p id="customer-name">Customer Name</p>
-                <p id="customer-address">Address Line 1, City, Zip</p>
-            </div>
+                <div class="shipping-info" style="text-align: left; padding: 0 1rem; margin-bottom: 3rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Shipping To:</h3>
+                    <p id="customer-name" style="font-weight: 600; margin-bottom: 0.2rem;">Customer Name</p>
+                    <p id="customer-address" style="color: var(--text-muted);">Address Line 1, City, Zip</p>
+                </div>
 
-            <div class="action-buttons no-print">
-                <a href="index.html" class="btn btn-primary">Continue Shopping</a>
-                <button onclick="window.print()" class="btn btn-outline">Download Invoice</button>
+                <div class="action-buttons no-print" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="index.html" class="btn btn-primary">Continue Shopping</a>
+                    <button onclick="window.print()" class="btn btn-outline">Download Invoice</button>
+                </div>
             </div>
         </div>
     </main>
@@ -77,18 +100,18 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
-                    <h3>BNK WELLNESS</h3>
-                    <p style="color: #94a3b8; max-width: 300px;">
+                    <h3 style="font-family: 'Playfair Display', serif; font-style: italic;">BNK WELLNESS</h3>
+                    <p style="color: #9ca3af; max-width: 300px;">
                         Elevating your daily ritual with science-backed Ayurvedic solutions. Pure, potent, and premium.
                     </p>
                 </div>
                 <div class="footer-col">
                     <h3>Shop</h3>
                     <ul>
-                        <li>Sexual Wellness</li>
-                        <li>Hair Care</li>
-                        <li>Diabetic Care</li>
-                        <li>All Products</li>
+                        <li>Herbs</li>
+                        <li>Oils</li>
+                        <li>Butters</li>
+                        <li>Consultations</li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -101,11 +124,11 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Stay Connected</h3>
-                    <div style="display: flex; gap: 15px; font-size: 1.2rem;">
-                        <i class="fab fa-instagram"></i>
-                        <i class="fab fa-facebook"></i>
-                        <i class="fab fa-twitter"></i>
+                    <h3>Follow Us</h3>
+                    <div style="display: flex; gap: 20px; font-size: 1.2rem; margin-top: 10px;">
+                        <i class="fab fa-instagram" style="cursor: pointer;"></i>
+                        <i class="fab fa-facebook" style="cursor: pointer;"></i>
+                        <i class="fab fa-pinterest" style="cursor: pointer;"></i>
                     </div>
                 </div>
             </div>
@@ -135,11 +158,12 @@
                         const product = products.find(p => p.id === item.productId);
                         if (!product) return '';
                         return `
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.95rem;">
-                                <div>
-                                    <span style="font-weight: 600;">${product.name}</span> <span style="color: #666;">x ${item.qty}</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 0.95rem; border-bottom: 1px dashed #eee; padding-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-weight: 600; color: var(--primary-dark);">${product.name}</span> 
+                                    <span style="background: #f3f4f6; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; color: var(--text-muted);">x${item.qty}</span>
                                 </div>
-                                <div>₹${product.price * item.qty}</div>
+                                <div style="font-weight: 500;">₹${product.price * item.qty}</div>
                             </div>
                         `;
                     }).join('');
