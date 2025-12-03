@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Confirmed | BNK Wellness</title>
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
     <style>
         .success-card {
             max-width: 700px;
-            margin: 4rem auto;
+            margin: 3rem auto;
             background: white;
             border-radius: 12px;
             box-shadow: var(--shadow-sm);
@@ -23,13 +23,74 @@
         .confirmation-container {
             min-height: 80vh;
             background: var(--bg-body);
+            padding: 2rem 0;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body {
+                padding: 0 !important;
+                background: white !important;
+            }
+            
+            header,
+            footer,
+            .no-print {
+                display: none !important;
+            }
+            
+            .confirmation-container {
+                min-height: auto !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+            
+            .success-card {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                padding: 20px !important;
+                max-width: 100% !important;
+                border-radius: 0 !important;
+            }
+            
+            .invoice-header {
+                display: block !important;
+                border-bottom: 2px solid #333 !important;
+                padding-bottom: 15px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            .invoice-header h1 {
+                font-size: 24px !important;
+                color: #333 !important;
+            }
+            
+            .print-only {
+                display: block !important;
+            }
+            
+            .order-details {
+                border: 1px solid #ccc !important;
+                background: white !important;
+            }
+            
+            .detail-row {
+                border-bottom: 1px solid #ddd !important;
+            }
+            
+            * {
+                color: #333 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header (Simplified) -->
-    <header>
+    <!-- Header (Hidden on print) -->
+    <header class="no-print">
         <div class="container header-container" style="justify-content: center;">
             <div class="logo"><a href="index.html">BNK WELLNESS</a></div>
         </div>
@@ -37,57 +98,61 @@
 
     <main class="confirmation-container">
         <div class="container">
-            <div class="success-card">
-                <!-- Print Only Header -->
-                <div class="invoice-header" style="display: none; text-align: left; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
-                    <h1 style="font-size: 2rem; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">BNK WELLNESS</h1>
-                    <p style="color: #666; font-size: 0.9rem;">
+            <div class="success-card" id="invoice-content">
+                <!-- Invoice Header (Only visible on print) -->
+                <div class="invoice-header" style="display: none; text-align: left; margin-bottom: 2rem; border-bottom: 2px solid #1F2937; padding-bottom: 1.5rem;">
+                    <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; color: #1F2937;">BNK WELLNESS</h1>
+                    <p style="color: #666; font-size: 0.85rem; margin: 0; line-height: 1.6;">
                         123 Wellness Street, Bangalore, KA 560102<br>
                         support@bnkwellness.com | +91 98765 43210
                     </p>
+                    <h2 class="print-only" style="display: none; margin-top: 1.5rem; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px;">Tax Invoice</h2>
                 </div>
 
-                <div class="success-icon no-print" style="width: 80px; height: 80px; background: var(--success); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
+                <!-- Success Icon (Hidden on print) -->
+                <div class="no-print" style="width: 80px; height: 80px; background: var(--success); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
                     <i class="fas fa-check"></i>
                 </div>
                 
-                <h1 class="no-print" style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 400;">Order Confirmed!</h1>
-                <h1 class="print-only" style="display: none;">TAX INVOICE</h1>
+                <h1 class="no-print" style="font-size: 2.2rem; margin-bottom: 1rem; font-weight: 400;">Order Confirmed!</h1>
                 
-                <p class="order-subtitle no-print" style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto 3rem;">
+                <p class="no-print" style="color: var(--text-muted); font-size: 1rem; max-width: 450px; margin: 0 auto 2.5rem;">
                     Thank you for choosing BNK Wellness. Your journey to holistic health begins here.
                 </p>
                 
-                <div class="order-details" style="background: #fafafa; border-radius: 8px; padding: 2rem; text-align: left; margin-bottom: 2rem; border: 1px solid #f3f4f6;">
-                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                <!-- Order Details -->
+                <div class="order-details" style="background: #fafafa; border-radius: 8px; padding: 1.5rem; text-align: left; margin-bottom: 2rem; border: 1px solid #f3f4f6;">
+                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #eee;">
                         <span style="color: var(--text-muted);">Order ID:</span>
                         <span id="order-id" style="font-weight: 600; color: var(--primary-dark);">#BNK-0000</span>
                     </div>
-                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #eee;">
                         <span style="color: var(--text-muted);">Date:</span>
                         <span id="order-date">Loading...</span>
                     </div>
-                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                    <div class="detail-row" style="display: flex; justify-content: space-between; padding: 0.75rem 0;">
                         <span style="color: var(--text-muted);">Total Amount:</span>
-                        <span class="total-amount" id="order-total" style="font-weight: 700; font-size: 1.2rem; color: var(--primary-dark);">₹0</span>
+                        <span id="order-total" style="font-weight: 700; font-size: 1.2rem; color: var(--primary-dark);">₹0</span>
                     </div>
                 </div>
 
                 <!-- Order Items Section -->
-                <div style="text-align: left; margin-bottom: 2rem; padding: 0 1rem;">
-                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Items Ordered</h3>
+                <div style="text-align: left; margin-bottom: 2rem;">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 1rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500;">Items Ordered</h3>
                     <div id="order-items-list">
                         <!-- Items injected via JS -->
                     </div>
                 </div>
 
-                <div class="shipping-info" style="text-align: left; padding: 0 1rem; margin-bottom: 3rem;">
-                    <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Shipping To:</h3>
-                    <p id="customer-name" style="font-weight: 600; margin-bottom: 0.2rem;">Customer Name</p>
-                    <p id="customer-address" style="color: var(--text-muted);">Address Line 1, City, Zip</p>
+                <!-- Shipping Info -->
+                <div style="text-align: left; margin-bottom: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem; font-family: 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500;">Shipping To:</h3>
+                    <p id="customer-name" style="font-weight: 600; margin-bottom: 0.25rem;">Customer Name</p>
+                    <p id="customer-address" style="color: var(--text-muted); margin: 0;">Address Line 1, City, Zip</p>
                 </div>
 
-                <div class="action-buttons no-print" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <!-- Action Buttons (Hidden on print) -->
+                <div class="no-print" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <a href="index.html" class="btn btn-primary">Continue Shopping</a>
                     <button onclick="window.print()" class="btn btn-outline">Download Invoice</button>
                 </div>
@@ -95,8 +160,8 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer>
+    <!-- Footer (Hidden on print) -->
+    <footer class="no-print">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
@@ -141,7 +206,6 @@
     <script src="js/products.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Retrieve order data from localStorage
             const lastOrder = JSON.parse(localStorage.getItem('bnk_last_order'));
             
             if (lastOrder) {
@@ -158,10 +222,10 @@
                         const product = products.find(p => p.id === item.productId);
                         if (!product) return '';
                         return `
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 0.95rem; border-bottom: 1px dashed #eee; padding-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="font-weight: 600; color: var(--primary-dark);">${product.name}</span> 
-                                    <span style="background: #f3f4f6; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; color: var(--text-muted);">x${item.qty}</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px dashed #eee;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-weight: 500;">${product.name}</span>
+                                    <span style="background: #f3f4f6; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; color: var(--text-muted);">×${item.qty}</span>
                                 </div>
                                 <div style="font-weight: 500;">₹${product.price * item.qty}</div>
                             </div>
@@ -169,7 +233,6 @@
                     }).join('');
                 }
             } else {
-                // If no order found, redirect to home
                 window.location.href = 'index.html';
             }
         });
