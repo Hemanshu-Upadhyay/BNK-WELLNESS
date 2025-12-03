@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details | BNK Wellness</title>
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -29,8 +29,8 @@
             </nav>
             
             <div class="header-icons">
-                <div class="search-icon">
-                    <i class="fas fa-search" style="color: var(--primary-dark); cursor: pointer;"></i>
+                <div class="search-icon" onclick="openSearch()">
+                    <i class="fas fa-search"></i>
                 </div>
                 <div class="cart-icon" onclick="window.location.href='cart.html'">
                     <i class="fas fa-shopping-bag"></i>
@@ -39,6 +39,25 @@
             </div>
         </div>
     </header>
+
+    <!-- Search Modal -->
+    <div class="search-overlay" id="search-overlay" onclick="closeSearchOnOverlay(event)">
+        <div class="search-modal">
+            <div class="search-modal-header">
+                <h3>Search Products</h3>
+                <button class="search-close-btn" onclick="closeSearch()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" id="search-input" placeholder="Search for products..." oninput="handleSearch(this.value)">
+            </div>
+            <div class="search-results" id="search-results">
+                <div class="search-no-results">Start typing to search...</div>
+            </div>
+        </div>
+    </div>
 
     <main class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
         <div class="breadcrumb">
@@ -106,6 +125,63 @@
     <script src="js/products.js"></script>
     <script src="js/main.js"></script>
     <script>
+        // Search Functions
+        function openSearch() {
+            document.getElementById('search-overlay').classList.add('active');
+            document.getElementById('search-input').focus();
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeSearch() {
+            document.getElementById('search-overlay').classList.remove('active');
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-results').innerHTML = '<div class="search-no-results">Start typing to search...</div>';
+            document.body.style.overflow = '';
+        }
+        
+        function closeSearchOnOverlay(e) {
+            if (e.target.id === 'search-overlay') {
+                closeSearch();
+            }
+        }
+        
+        function handleSearch(query) {
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (query.length < 2) {
+                resultsContainer.innerHTML = '<div class="search-no-results">Start typing to search...</div>';
+                return;
+            }
+            
+            const filteredProducts = products.filter(p => 
+                p.name.toLowerCase().includes(query.toLowerCase()) ||
+                p.description.toLowerCase().includes(query.toLowerCase()) ||
+                p.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            if (filteredProducts.length === 0) {
+                resultsContainer.innerHTML = '<div class="search-no-results">No products found for "' + query + '"</div>';
+                return;
+            }
+            
+            resultsContainer.innerHTML = filteredProducts.map(p => `
+                <div class="search-result-item" onclick="window.location.href='product-detail.html?id=${p.id}'">
+                    <img src="${p.image}" alt="${p.name}">
+                    <div class="search-result-info">
+                        <h4>${p.name}</h4>
+                        <p>₹${p.price}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSearch();
+            }
+        });
+
+        // PDP Logic
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = parseInt(urlParams.get('id'));
@@ -201,7 +277,7 @@
 
             tabsContainer.innerHTML = `
                 <div class="tab-header">
-                    <button class="tab-btn active" onclick="switchTab('details', this)">Product Details</button>
+                    <button class="tab-btn active" onclick="switchTab('details', this)">Details</button>
                     <button class="tab-btn" onclick="switchTab('ingredients', this)">Ingredients</button>
                     <button class="tab-btn" onclick="switchTab('faqs', this)">FAQs</button>
                     <button class="tab-btn" onclick="switchTab('reviews', this)">Reviews</button>
@@ -231,11 +307,8 @@
         }
 
         function switchTab(tabName, btn) {
-            // Reset all tabs
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            // Activate selected
             btn.classList.add('active');
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
